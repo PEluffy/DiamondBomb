@@ -1,10 +1,20 @@
 import "./SingleCard.css";
+
+interface Card {
+  src: string;
+  flipped: boolean;
+  id: number;
+}
+interface SingleCardProp {
+  card: Card;
+  handleChoice: (card: Card) => void;
+  gameOver: boolean;
+}
 export default function SingleCard({
   card,
   handleChoice,
-  flipped,
   gameOver,
-}: any) {
+}: SingleCardProp) {
   const handleCardClick = () => {
     console.log(card.flipped);
     if (!gameOver && card.flipped === false) {
@@ -13,7 +23,7 @@ export default function SingleCard({
   };
   return (
     <div className="card">
-      <div className={flipped ? "flipped" : ""}>
+      <div className={card.flipped ? "flipped" : ""}>
         <img
           className="back"
           src="./img/cover.png"

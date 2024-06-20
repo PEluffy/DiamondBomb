@@ -19,3 +19,13 @@
   border-radius: 10px;
   text-align: center;
 }
+.game-options-box {
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+}
+.bet-items {
+  display: flex;
+  gap: 1%;
+}
