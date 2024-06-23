@@ -71,6 +71,7 @@ interface Bet {
 function App() {
   const [cards, setCards] = useState<Card[]>([]);
   const [choice, setChoice] = useState<Card | null>(null);
+  const [start, setStart] = useState(false);
   const [gameOver, setGameOver] = useState(false);
   const [winAmount, setWinAmount] = useState(0);
   const [betMoney, setBetMoney] = useState(1);
@@ -85,12 +86,14 @@ function App() {
       .map((card) => ({ ...card, id: Math.random() }));
     setNoOfClicks(0);
     setCards(shuffledCards);
+    setStart(true);
     setGameOver(false);
   };
 
   const handleChoice = (selectedCard: Card) => {
     if (selectedCard.src === cardImages[0].src) {
       setGameOver(true);
+      setStart(false);
     }
     setCards(
       cards.map((card) =>
@@ -102,12 +105,16 @@ function App() {
     setWinAmount(prizes[noOfClicks] * betMoney);
   };
   const handleBetChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedBet = bets.find((bet) => bet.moneyKey === event.target.value);
-    if (selectedBet) {
-      setBetMoney(parseInt(selectedBet.money));
-      setSelectedBet(selectedBet);
-      console.log(betMoney);
-      setWinAmount(betMoney);
+    if (!start) {
+      const selectedBet = bets.find(
+        (bet) => bet.moneyKey === event.target.value
+      );
+      if (selectedBet) {
+        setBetMoney(parseInt(selectedBet.money));
+        setSelectedBet(selectedBet);
+        console.log(betMoney);
+        setWinAmount(betMoney);
+      }
     }
   };
 
